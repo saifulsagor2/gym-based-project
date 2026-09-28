@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { PlanProvider } from "@/context/PlanContext";
 
 export const metadata: Metadata = {
   title: "FitLog",
@@ -13,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PlanProvider>
+          {children}
+        </PlanProvider>
+      </body>
     </html>
   );
 }

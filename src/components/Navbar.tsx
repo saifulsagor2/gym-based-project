@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { usePlan } from "@/context/PlanContext";
 
 const Navbar = () => {
+  const { planCount } = usePlan();
+
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -24,7 +29,7 @@ const Navbar = () => {
 
           <Link href="/my-plan" className="nav-stat">
             <span>Plan</span>
-            <strong>0</strong>
+            <strong>{planCount}</strong>
           </Link>
 
           <Link href="/my-plan" className="nav-stat">
