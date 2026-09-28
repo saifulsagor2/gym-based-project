@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
+import WorkoutLibrary from "@/components/WorkoutLibrary";
 
 const HomePage = () => {
   return (
@@ -7,6 +8,8 @@ const HomePage = () => {
       <Navbar />
 
       <Hero />
+
+      <WorkoutLibrary />
     </main>
   );
 };
