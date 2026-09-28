@@ -1,3 +1,4 @@
+import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 
 const HomePage = () => {
@@ -5,10 +6,7 @@ const HomePage = () => {
     <main>
       <Navbar />
 
-      <section className="container">
-        <h1>FITLOG</h1>
-        <p>Train hard. Log honest.</p>
-      </section>
+      <Hero />
     </main>
   );
 };
