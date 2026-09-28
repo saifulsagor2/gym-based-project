@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import WorkoutCard from "@/components/WorkoutCard";
 import { workouts } from "@/data/workouts";
 import { usePlan } from "@/context/PlanContext";
+import TodayPlan from "@/components/TodayPlan";
 
 const MyPlanPage = () => {
   const {
@@ -43,6 +44,8 @@ const MyPlanPage = () => {
             </div>
 
           </div>
+
+          <TodayPlan />
 
           {planWorkouts.length === 0 ? (
             <div className="empty-plan">

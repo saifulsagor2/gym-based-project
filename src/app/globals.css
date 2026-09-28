@@ -857,3 +857,168 @@ img {
     font-size: 23px;
   }
 }
+
+/* =========================
+   TODAY'S PLAN
+========================= */
+
+.today-plan {
+  margin-bottom: 60px;
+}
+
+.today-plan-header {
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.today-plan-subtitle {
+  margin-bottom: 8px;
+
+  color: #c8ff00;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.today-plan-header h2 {
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.today-progress {
+  min-width: 120px;
+  padding: 15px;
+
+  background: #15171d;
+  border: 1px solid #25272e;
+
+  text-align: center;
+}
+
+.today-progress span {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #737781;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.today-progress strong {
+  color: #c8ff00;
+  font-size: 22px;
+}
+
+.today-plan-list {
+  display: flex;
+  flex-direction: column;
+
+  border-top: 1px solid #25272e;
+}
+
+.today-plan-item {
+  min-height: 85px;
+  padding: 16px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  background: #15171d;
+  border: 1px solid #25272e;
+  border-top: none;
+
+  transition: 0.2s;
+}
+
+.today-plan-item.completed {
+  opacity: 0.55;
+}
+
+.today-plan-item.completed h3 {
+  text-decoration: line-through;
+}
+
+.today-plan-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.today-plan-number {
+  color: #c8ff00;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.today-plan-info h3 {
+  margin-bottom: 3px;
+
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.today-plan-info p {
+  color: #737781;
+  font-size: 11px;
+}
+
+.done-button {
+  min-width: 125px;
+  padding: 10px 14px;
+
+  background: transparent;
+  border: 1px solid #25272e;
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.done-button:hover {
+  background: #c8ff00;
+  border-color: #c8ff00;
+  color: #0e0f13;
+}
+
+.today-plan-item.completed .done-button {
+  background: #c8ff00;
+  border-color: #c8ff00;
+  color: #0e0f13;
+}
+
+@media (max-width: 600px) {
+  .today-plan-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .today-plan-header h2 {
+    font-size: 30px;
+  }
+
+  .today-plan-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .today-plan-info {
+    width: 100%;
+  }
+
+  .done-button {
+    width: 100%;
+  }
+}
