@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePlan } from "@/context/PlanContext";
 
 type Workout = {
   id: number;
@@ -21,6 +24,22 @@ type WorkoutCardProps = {
 };
 
 const WorkoutCard = ({ workout }: WorkoutCardProps) => {
+  const {
+    addToPlan,
+    removeFromPlan,
+    isInPlan,
+  } = usePlan();
+
+  const inPlan = isInPlan(workout.id);
+
+  const handlePlanClick = () => {
+    if (inPlan) {
+      removeFromPlan(workout.id);
+    } else {
+      addToPlan(workout.id);
+    }
+  };
+
   return (
     <div className="workout-card">
 
@@ -63,6 +82,15 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
           </span>
 
         </div>
+
+        <button
+          className={`card-plan-button ${
+            inPlan ? "in-plan" : ""
+          }`}
+          onClick={handlePlanClick}
+        >
+          {inPlan ? "✓ IN PLAN" : "+ ADD TO PLAN"}
+        </button>
 
       </div>
 
