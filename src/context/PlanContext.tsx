@@ -9,40 +9,67 @@ import {
 
 type PlanContextType = {
   plannedWorkouts: number[];
+  savedWorkouts: number[];
+
   addToPlan: (id: number) => void;
   removeFromPlan: (id: number) => void;
+
+  saveWorkout: (id: number) => void;
+  removeSavedWorkout: (id: number) => void;
+
   isInPlan: (id: number) => boolean;
+  isSaved: (id: number) => boolean;
+
   planCount: number;
+  savedCount: number;
 };
 
 const PlanContext = createContext<PlanContextType | undefined>(
   undefined
 );
 
-type PlanProviderProps = {
-  children: ReactNode;
-};
-
 export const PlanProvider = ({
   children,
-}: PlanProviderProps) => {
+}: {
+  children: ReactNode;
+}) => {
   const [plannedWorkouts, setPlannedWorkouts] = useState<number[]>(
     []
   );
 
+  const [savedWorkouts, setSavedWorkouts] = useState<number[]>(
+    []
+  );
+
   const addToPlan = (id: number) => {
-    setPlannedWorkouts((current) => {
-      if (current.includes(id)) {
-        return current;
+    setPlannedWorkouts((workouts) => {
+      if (workouts.includes(id)) {
+        return workouts;
       }
 
-      return [...current, id];
+      return [...workouts, id];
     });
   };
 
   const removeFromPlan = (id: number) => {
-    setPlannedWorkouts((current) =>
-      current.filter((workoutId) => workoutId !== id)
+    setPlannedWorkouts((workouts) =>
+      workouts.filter((workoutId) => workoutId !== id)
+    );
+  };
+
+  const saveWorkout = (id: number) => {
+    setSavedWorkouts((workouts) => {
+      if (workouts.includes(id)) {
+        return workouts;
+      }
+
+      return [...workouts, id];
+    });
+  };
+
+  const removeSavedWorkout = (id: number) => {
+    setSavedWorkouts((workouts) =>
+      workouts.filter((workoutId) => workoutId !== id)
     );
   };
 
@@ -50,14 +77,27 @@ export const PlanProvider = ({
     return plannedWorkouts.includes(id);
   };
 
+  const isSaved = (id: number) => {
+    return savedWorkouts.includes(id);
+  };
+
   return (
     <PlanContext.Provider
       value={{
         plannedWorkouts,
+        savedWorkouts,
+
         addToPlan,
         removeFromPlan,
+
+        saveWorkout,
+        removeSavedWorkout,
+
         isInPlan,
+        isSaved,
+
         planCount: plannedWorkouts.length,
+        savedCount: savedWorkouts.length,
       }}
     >
       {children}
@@ -69,9 +109,7 @@ export const usePlan = () => {
   const context = useContext(PlanContext);
 
   if (!context) {
-    throw new Error(
-      "usePlan must be used inside PlanProvider"
-    );
+    throw new Error("usePlan must be used inside PlanProvider");
   }
 
   return context;
