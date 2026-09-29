@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { usePlan } from "@/context/PlanContext";
 
 const Navbar = () => {
   const { planCount, savedCount } = usePlan();
+  const pathname = usePathname();
 
   return (
     <header className="navbar">
+
       <div className="navbar-container">
 
         <Link href="/" className="logo">
@@ -19,14 +22,18 @@ const Navbar = () => {
 
           <Link
             href="/"
-            className="nav-link active"
+            className={`nav-link ${
+              pathname === "/" ? "active" : ""
+            }`}
           >
             Workouts
           </Link>
 
           <Link
             href="/my-plan"
-            className="nav-link"
+            className={`nav-link ${
+              pathname === "/my-plan" ? "active" : ""
+            }`}
           >
             My Plan
           </Link>
@@ -37,20 +44,24 @@ const Navbar = () => {
 
           <Link
             href="/my-plan"
-            className="nav-stat"
+            className="nav-stat plan-stat"
           >
             <span>Plan</span>
             <strong>{planCount}</strong>
           </Link>
 
-          <div className="nav-stat">
+          <Link
+            href="/my-plan"
+            className="nav-stat saved-stat"
+          >
             <span>Saved</span>
             <strong>{savedCount}</strong>
-          </div>
+          </Link>
 
         </div>
 
       </div>
+
     </header>
   );
 };

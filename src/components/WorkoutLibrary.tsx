@@ -1,9 +1,18 @@
-import { workouts } from "@/data/workouts";
 import WorkoutCard from "./WorkoutCard";
 
-const WorkoutLibrary = () => {
+const WorkoutLibrary = async () => {
+  const response = await fetch(
+    "https://api.abcz.workers.dev/api/fitlog",
+    {
+      cache: "no-store",
+    }
+  );
+
+  const workouts = await response.json();
+
   return (
-    <section id="workouts" className="workout-library">
+    <section id="library" className="workout-library">
+
       <div className="library-header">
 
         <div>
@@ -26,13 +35,16 @@ const WorkoutLibrary = () => {
       </div>
 
       <div className="workout-grid">
-        {workouts.map((workout) => (
+
+        {workouts.map((workout: any) => (
           <WorkoutCard
             key={workout.id}
             workout={workout}
           />
         ))}
+
       </div>
+
     </section>
   );
 };
