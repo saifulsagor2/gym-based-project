@@ -4,138 +4,120 @@ import Link from "next/link";
 import { usePlan } from "@/context/PlanContext";
 
 type Workout = {
-  id: number;
-  name: string;
-  equipment: string;
-  duration: number;
-  calories: number;
-  rating: number;
-  image: string;
+    id: number;
+    name: string;
+    equipment: string;
+    duration: number;
+    calories: number;
+    rating: number;
+    image: string;
 };
 
 type PlanWorkoutItemProps = {
-  workout: Workout;
+    workout: Workout;
 };
 
 const PlanWorkoutItem = ({
-  workout,
+    workout,
 }: PlanWorkoutItemProps) => {
 
-  const {
-    removeFromPlan,
-    markAsDone,
-    markAsUndone,
-    isCompleted,
-    showToast,
-  } = usePlan();
+    const {
+        removeFromPlan,
+        markAsDone,
+        markAsUndone,
+        isCompleted,
+    } = usePlan();
 
-  const completed = isCompleted(workout.id);
+    const completed = isCompleted(workout.id);
 
-  const handleDone = () => {
+    const handleDone = () => {
 
-    if (completed) {
-      markAsUndone(workout.id);
+        if (completed) {
+            markAsUndone(workout.id);
+            return;
+        }
 
-      showToast(
-        "Workout marked as not completed",
-        "success"
-      );
+        markAsDone(workout.id);
+    };
 
-      return;
-    }
+    const handleRemove = () => {
+        removeFromPlan(workout.id);
+    };
 
-    markAsDone(workout.id);
+    return (
+        <div
+            className={`plan-workout-item ${
+                completed ? "completed" : ""
+            }`}
+        >
 
-    showToast(
-      "Workout marked as done",
-      "success"
-    );
-  };
+            <div className="plan-workout-left">
 
-  const handleRemove = () => {
+                <img
+                    src={workout.image}
+                    alt={workout.name}
+                />
 
-    removeFromPlan(workout.id);
+                <div>
 
-    showToast(
-      "Removed from today's plan",
-      "success"
-    );
-  };
+                    <h3>
+                        {workout.name}
+                    </h3>
 
-  return (
-    <div
-      className={`plan-workout-item ${
-        completed ? "completed" : ""
-      }`}
-    >
+                    <p>
+                        {workout.equipment}
+                    </p>
 
-      <div className="plan-workout-left">
+                    <div className="plan-workout-meta">
 
-        <img
-          src={workout.image}
-          alt={workout.name}
-        />
+                        <span>
+                            ◷ {workout.duration} min
+                        </span>
 
-        <div>
+                        <span>
+                            🔥 {workout.calories} kcal
+                        </span>
 
-          <h3>
-            {workout.name}
-          </h3>
+                        <span>
+                            ★ {workout.rating}
+                        </span>
 
-          <p>
-            {workout.equipment}
-          </p>
+                    </div>
 
-          <div className="plan-workout-meta">
+                </div>
 
-            <span>
-              ◷ {workout.duration} min
-            </span>
+            </div>
 
-            <span>
-              🔥 {workout.calories} kcal
-            </span>
+            <div className="plan-workout-actions">
 
-            <span>
-              ★ {workout.rating}
-            </span>
+                <Link
+                    href={`/workouts/${workout.id}`}
+                    className="view-details-button"
+                >
+                    View Details
+                </Link>
 
-          </div>
+                <button
+                    className={`done-button ${
+                        completed ? "completed-button" : ""
+                    }`}
+                    onClick={handleDone}
+                >
+                    ✓ {completed ? "Completed" : "Mark as Done"}
+                </button>
+
+                <button
+                    className="remove-workout-button"
+                    onClick={handleRemove}
+                    aria-label="Remove workout"
+                >
+                    ×
+                </button>
+
+            </div>
 
         </div>
-
-      </div>
-
-      <div className="plan-workout-actions">
-
-        <Link
-          href={`/workouts/${workout.id}`}
-          className="view-details-button"
-        >
-          View Details
-        </Link>
-
-        <button
-          className={`done-button ${
-            completed ? "completed-button" : ""
-          }`}
-          onClick={handleDone}
-        >
-          ✓ {completed ? "Completed" : "Mark as Done"}
-        </button>
-
-        <button
-          className="remove-workout-button"
-          onClick={handleRemove}
-          aria-label="Remove workout"
-        >
-          ×
-        </button>
-
-      </div>
-
-    </div>
-  );
+    );
 };
 
 export default PlanWorkoutItem;

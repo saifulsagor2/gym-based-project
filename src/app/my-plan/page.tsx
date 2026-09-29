@@ -16,7 +16,7 @@ type Workout = {
     equipment: string;
     difficulty: string;
     duration: number;
-    caloriesBurned: number;
+    calories: number;
     sets: number;
     reps: string;
     rating: number;
@@ -31,8 +31,11 @@ const MyPlanPage = () => {
         removeFromPlan,
     } = usePlan();
 
-    const [workouts, setWorkouts] = useState<Workout[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [workouts, setWorkouts] =
+        useState<Workout[]>([]);
+
+    const [loading, setLoading] =
+        useState(true);
 
 
     // Fetch workouts from API
@@ -47,12 +50,61 @@ const MyPlanPage = () => {
                 );
 
                 if (!response.ok) {
-                    throw new Error("Failed to fetch workouts");
+                    throw new Error(
+                        "Failed to fetch workouts"
+                    );
                 }
 
                 const data = await response.json();
 
-                setWorkouts(data);
+
+                // Convert API data
+                // to the format used by MyPlanCard
+                const formattedWorkouts: Workout[] =
+                    data.map((workout: any) => ({
+
+                        id: workout.id,
+
+                        name: workout.name,
+
+                        image: workout.image,
+
+                        muscleGroups:
+                            workout.muscleGroups || [],
+
+                        equipment:
+                            workout.equipment,
+
+                        difficulty:
+                            workout.difficulty,
+
+                        duration:
+                            workout.duration,
+
+                        calories:
+                            workout.caloriesBurned,
+
+                        sets:
+                            workout.sets,
+
+                        reps:
+                            workout.reps,
+
+                        rating:
+                            workout.rating,
+
+                        description:
+                            workout.description,
+
+                        instructions:
+                            workout.instructions || [],
+
+                    }));
+
+
+                setWorkouts(
+                    formattedWorkouts
+                );
 
             } catch (error) {
 
@@ -66,6 +118,7 @@ const MyPlanPage = () => {
                 setLoading(false);
 
             }
+
         };
 
         fetchWorkouts();
@@ -73,10 +126,13 @@ const MyPlanPage = () => {
     }, []);
 
 
-    // Get only planned workouts
-    const planWorkouts = workouts.filter((workout) =>
-        plannedWorkouts.includes(workout.id)
-    );
+    // Get planned workouts
+    const planWorkouts =
+        workouts.filter((workout) =>
+            plannedWorkouts.includes(
+                workout.id
+            )
+        );
 
 
     return (
@@ -85,6 +141,7 @@ const MyPlanPage = () => {
             <section className="plan-page">
 
                 <div className="plan-container">
+
 
                     {/* PAGE HEADER */}
 
@@ -157,8 +214,9 @@ const MyPlanPage = () => {
                                     </h2>
 
                                     <p>
-                                        Add workouts to today&apos;s
-                                        plan and start training.
+                                        Add workouts to
+                                        today&apos;s plan
+                                        and start training.
                                     </p>
 
                                     <Link
